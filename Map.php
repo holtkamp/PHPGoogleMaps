@@ -1917,16 +1917,26 @@ class Map
      */
     public function getHeaderJSUrl()
     {
-        return sprintf(
-            'http%s://maps.google.com/maps/api/js?sensor=%s&v=%s&language=%s&region=%s&libraries=%s&key=%s',
-            $this->use_https ? 's' : '',
-            json_encode($this->sensor),
-            $this->api_version,
-            $this->language,
-            $this->region,
-            (count($this->libraries) ? sprintf(implode(',', $this->libraries)) : ''),
-            $this->api_key ? $this->api_key : ''
+        $baseUrl = $this->use_https ? 'https://maps.google.com/maps/api/js/' : 'http://maps.google.com/maps/api/js/';
+
+        $parameters = array(
+            'v' => $this->api_version,
         );
+
+        if(isset($this->language)){
+            $parameters['language'] = $this->language;
+        }
+        if(isset($this->region)){
+            $parameters['region'] = $this->region;
+        }
+        if(count($this->libraries) > 0){
+            $parameters['libraries'] = implode(',', $this->libraries);
+        }
+        if($this->api_key){
+            $parameters['key'] = $this->api_key;
+        }
+
+        return $baseUrl . http_build_query($parameters);
     }
 
     /**
