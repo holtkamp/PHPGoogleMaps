@@ -8,6 +8,7 @@ use PHPGoogleMaps\Core\StaticMapObject;
 use PHPGoogleMaps\Service\Geocoder;
 use PHPGoogleMaps\Service\GeocodeResult;
 use PHPGoogleMaps\Utility;
+use PHPGoogleMaps\Service\GeocodeException;
 
 /**
  * Marker class for adding markers to a map
@@ -77,8 +78,7 @@ class Marker extends StaticMapObject {
 	 * This is private, you must use a static creation method
 	 *
 	 * @param mixed $position Position of the marker. This will be null for geolocated markers.
-	 * @param array options Array of marker options
-	 * @return Marker
+	 * @param array $options Array of marker options
 	*/
 	private function __construct( $position=null, array $options=null ) {
 		if ( $options ) {
@@ -124,7 +124,7 @@ class Marker extends StaticMapObject {
 	 * Add marker to a group
 	 *
 	 * @param string|MarkerGroup $group Can be a Markergroup or a string
-	 * @return Marker
+	 * @return $this
 	 */
     public function addToGroup( $group ) {
 		if ( $group instanceof MarkerGroup ) {
@@ -140,7 +140,7 @@ class Marker extends StaticMapObject {
 	 * Add marker to an array of groups
 	 *
 	 * @param array $groups
-	 * @return Marker
+	 * @return $this
 	 */
     public function addToGroups( array $groups ) {
 		foreach( $groups as $group ) {
@@ -153,7 +153,7 @@ class Marker extends StaticMapObject {
 	 * Sets the marker's icon and optionally shadow
 	 *
 	 * @param MarkerIcon $icon The marker's icon.
-	 * @return Marker
+	 * @return $this
 	 */
 	public function setIcon( $icon ) {
 		if ( !$icon instanceof MarkerIcon ) {
@@ -191,7 +191,7 @@ class Marker extends StaticMapObject {
 	 * Sets the marker's shadow
 	 *
 	 * @param MarkerIcon $shadow The marker's shadow.
-	 * @return Marker
+	 * @return $this
 	 */
 	public function setShadow( $shadow ) {
 		if ( !$shadow instanceof MarkerIcon ) {
@@ -205,7 +205,7 @@ class Marker extends StaticMapObject {
 	 * Sets the marker's shape
 	 *
 	 * @param MarkerShape $shape The marker's shape.
-	 * @return MarkerShape
+	 * @return $this
 	 */
 	public function setShape( MarkerShape $shape ) {
 		$this->shape = $shape;
@@ -218,7 +218,7 @@ class Marker extends StaticMapObject {
 	 * Use `createMarkerFromUserLocation()`
 	 *
 	 * @access private
-	 * @return MarkerIcon
+	 * @return $this
 	 */
 	private function enableGeolocation() {
 		$this->geolocation = true;
@@ -237,7 +237,7 @@ class Marker extends StaticMapObject {
 	/**
 	 * Factory method to create a marker from a position (LatLng or GeocodeResult)
 	 *
-	 * @param AbstractPosition $position Position of the marker
+	 * @param PositionAbstract $position Position of the marker
 	 * @param array $options Array of marker options
 	 * @return Marker
 	 */
@@ -259,7 +259,7 @@ class Marker extends StaticMapObject {
 			return self::createFromPosition( $geocode_result, $options );
 		}
 		else {
-			throw new \PHPGoogleMaps\Service\GeocodeException( $geocode_result );
+			throw new GeocodeException( $geocode_result );
 		}
 	}
 
@@ -267,7 +267,7 @@ class Marker extends StaticMapObject {
 	 * Factory method to create a marker from the user's location
 	 * This uses HTML5's geolocation API
 	 *
-	 * @param array options Array of marker options
+	 * @param array $options Array of marker options
 	 * @return Marker
 	 */
 	public static function createFromUserLocation( array $options=null ){
