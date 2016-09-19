@@ -1917,7 +1917,7 @@ class Map
      */
     public function getHeaderJSUrl()
     {
-        $baseUrl = $this->use_https ? 'https://maps.google.com/maps/api/js/' : 'http://maps.google.com/maps/api/js/';
+        $baseUrl = $this->use_https ? 'https://maps.google.com/maps/api/js?' : 'http://maps.google.com/maps/api/js?';
 
         $parameters = array(
             'v' => $this->api_version,
