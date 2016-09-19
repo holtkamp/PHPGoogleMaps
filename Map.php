@@ -740,7 +740,7 @@ class Map
      *
      * @param string $api_key Your API Key
      */
-    function setApiKey($api_key)
+    public function setApiKey($api_key)
     {
         $this->api_key = $api_key;
     }
@@ -771,7 +771,7 @@ class Map
      *
      * @param string $content Content to display while the map is loading
      */
-    function setLoadingContent($content)
+    public function setLoadingContent($content)
     {
         $this->loading_content = $content;
     }
@@ -1228,7 +1228,7 @@ class Map
      * @param array $map_types Array of map types to enable
      * @return void
      */
-    function setMapTypes(array $map_types)
+    public function setMapTypes(array $map_types)
     {
         foreach ($map_types as $map_type) {
             if ($map_type instanceof \PHPGoogleMaps\Overlay\MapStyle) {
@@ -1867,7 +1867,7 @@ class Map
      *
      * @return void
      */
-    function printMap()
+    public function printMap()
     {
         echo $this->getMap();
     }
@@ -1877,7 +1877,7 @@ class Map
      *
      * @return string
      */
-    function getMap()
+    public function getMap()
     {
         $iphone_safari_hide_navbar = sprintf("\n<script type=\"text/javascript\">if (navigator.userAgent.indexOf('iPhone') > -1 && navigator.userAgent.indexOf('Safari') > -1){ document.getElementById('%s').style.height = screen.height + 60 + 'px' }</script>", $this->map_id);
         return sprintf('<div id="%s" style="%s%s">%s</div>%s', $this->map_id, ($this->width ? 'width:' . $this->width . ';' : ''), ($this->height ? 'height:' . $this->height . ';' : ''), $this->loading_content ? $this->loading_content : '', $this->mobile_iphone_fullscreen ? $iphone_safari_hide_navbar : '');
@@ -1899,7 +1899,7 @@ class Map
      *
      * @return string
      */
-    function getHeaderJS()
+    public function getHeaderJS()
     {
         $header_js = sprintf(
             "%s<script type=\"text/javascript\" src=\"%s\"></script>\n\n",

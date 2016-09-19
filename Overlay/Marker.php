@@ -126,7 +126,7 @@ class Marker extends StaticMapObject {
 	 * @param string|MarkerGroup $group Can be a Markergroup or a string
 	 * @return Marker
 	 */
-	function addToGroup( $group ) {
+    public function addToGroup( $group ) {
 		if ( $group instanceof MarkerGroup ) {
 			$this->groups[] = $group;
 		}
@@ -142,7 +142,7 @@ class Marker extends StaticMapObject {
 	 * @param array $groups
 	 * @return Marker
 	 */
-	function addToGroups( array $groups ) {
+    public function addToGroups( array $groups ) {
 		foreach( $groups as $group ) {
 			$this->addToGroup( $group );
 		}
@@ -281,7 +281,7 @@ class Marker extends StaticMapObject {
 	 *
 	 * @return LatLng|null
 	 */
-	function getPosition() {
+    public function getPosition() {
 		return $this->position;
 	}
 
